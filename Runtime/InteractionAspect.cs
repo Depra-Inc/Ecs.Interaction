@@ -5,16 +5,16 @@ namespace Depra.Ecs.Interaction
 {
 	public sealed class InteractionAspect : IComponentAspect
 	{
-		public ComponentPool<InteractionMask> Mask { get; private set; }
-		public ComponentPool<InteractInputButton> Buttons { get; private set; }
+		public ComponentPool<InteractionLayerMask> Mask { get; private set; }
+		public ComponentPool<InteractInputButton> Button { get; private set; }
 		public ComponentPool<InteractionDistance> Distance { get; private set; }
 
 
 		void IComponentAspect.Initialize(AspectGroup aspects, ComponentPoolGroup pools)
 		{
 			aspects.Add(this);
-			pools.Add(Mask = new ComponentPool<InteractionMask>());
-			pools.Add(Buttons = new ComponentPool<InteractInputButton>());
+			pools.Add(Mask = new ComponentPool<InteractionLayerMask>());
+			pools.Add(Button = new ComponentPool<InteractInputButton>());
 			pools.Add(Distance = new ComponentPool<InteractionDistance>());
 		}
 	}

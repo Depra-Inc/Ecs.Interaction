@@ -2,10 +2,8 @@
     "name": "Depra.Ecs.Interaction",
     "rootNamespace": "Depra.Ecs.Interaction",
     "references": [
-        "GUID:e26e79c2120fe6b48b93f825f9528a77",
-        "GUID:d4d2d3673d7d2a146884ebf91bc9e015",
-        "GUID:fc5a9ae33462db84eba980383e0f74c8",
-        "GUID:59eeb61925854c1d977ff887c2867aaf"
+        "GUID:59eeb61925854c1d977ff887c2867aaf",
+        "GUID:e26e79c2120fe6b48b93f825f9528a77"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
@@ -14,8 +12,7 @@
     "precompiledReferences": [
         "Depra.Ecs.dll",
         "Depra.Ecs.QoL.dll",
-        "Depra.Ecs.Modules.dll",
-        "Depra.Ecs.Health.dll"
+        "Depra.Ecs.Modules.dll"
     ],
     "autoReferenced": true,
     "defineConstraints": [],

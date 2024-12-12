@@ -10,8 +10,7 @@ namespace Depra.Ecs.Interaction
 	public sealed class InteractiveObject : MonoBehaviour, IInteractable
 	{
 		[SerializeField] private ComponentDatabase[] _componentDatabases;
-
-		//TODO: Перенести таймер сюда
+		
 		public bool CanInteract { get; private set; } = true;
 
 		public void Begin(PackedEntityWithWorld sourceEntity)
@@ -38,7 +37,8 @@ namespace Depra.Ecs.Interaction
 		}
 
 		public void Execute(PackedEntityWithWorld sourceEntity)
-		{
+		{		
+			//TODO: Сделать таймер
 			return;
 		}
 

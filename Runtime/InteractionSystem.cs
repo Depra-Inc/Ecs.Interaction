@@ -2,7 +2,6 @@
 // © 2024 Evgeniy Kraevskiy <e.craevsky@depra.org>
 
 using Depra.Ecs.Components;
-using Depra.Ecs.Game.Loop;
 using Depra.Ecs.QoL;
 using UnityEngine;
 
@@ -22,9 +21,8 @@ namespace Depra.Ecs.Interaction
 
 			// TODO: возможно обобщить, чтобы взамодействовать могли и другие объекты
 			_entities = new EntityQueryBuilder()
-				.With<PlayerTag>()
 				.With<CameraRef>()
-				.With<InteractionMask>()
+				.With<InteractionLayerMask>()
 				.With<InteractInputButton>()
 				.With<InteractionDistance>()
 				.Build().Initialize(_world);
@@ -47,15 +45,15 @@ namespace Depra.Ecs.Interaction
 					continue;
 				}
 
-				if (Input.GetButtonDown(_interaction.Buttons[entity].Value))
+				if (Input.GetButtonDown(_interaction.Button[entity].Value))
 				{
 					interactable.Begin(_world.PackEntityWithWorld(entity));
 				}
-				else if (Input.GetButton(_interaction.Buttons[entity].Value))
+				else if (Input.GetButton(_interaction.Button[entity].Value))
 				{
 					interactable.Execute(_world.PackEntityWithWorld(entity));
 				}
-				else if (Input.GetButtonUp(_interaction.Buttons[entity].Value))
+				else if (Input.GetButtonUp(_interaction.Button[entity].Value))
 				{
 					interactable.Finish(_world.PackEntityWithWorld(entity));
 				}

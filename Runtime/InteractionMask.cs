@@ -6,7 +6,7 @@ using UnityEngine;
 namespace Depra.Ecs.Interaction
 {
 	[System.Serializable]
-	public struct InteractionMask
+	public struct InteractionLayerMask
 	{
 		public LayerMask Value;
 	}

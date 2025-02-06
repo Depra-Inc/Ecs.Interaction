@@ -1,16 +1,21 @@
 ﻿// SPDX-License-Identifier: Apache-2.0
-// © 2024 Evgeniy Kraevskiy <e.craevsky@depra.org>
+// © 2024-2025 Evgeniy Kraevskiy <e.craevsky@depra.org>
 
 using Depra.Ecs.Hybrid;
 using Depra.Ecs.QoL;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Depra.Ecs.Interaction
 {
 	public sealed class InteractiveObject : MonoBehaviour, IInteractable
 	{
-		[SerializeField] private ComponentDatabase[] _componentDatabases;
-		
+		[SerializeField] private ComponentDatabase[] _onBeginComponentDatabases;
+		[SerializeField] private ComponentDatabase[] _onExecuteComponentDatabases;
+		[SerializeField] private ComponentDatabase[] _onFinishComponentDatabases;
+
+		[SerializeField] private UnityEvent _onBegin;
+		[SerializeField] private UnityEvent _onFinish;
 		public bool CanInteract { get; private set; } = true;
 
 		public void Begin(PackedEntityWithWorld sourceEntity)
@@ -20,7 +25,7 @@ namespace Depra.Ecs.Interaction
 				return;
 			}
 
-			foreach (var componentDatabase in _componentDatabases)
+			foreach (var componentDatabase in _onBeginComponentDatabases)
 			{
 				foreach (var component in componentDatabase.Components)
 				{
@@ -32,7 +37,7 @@ namespace Depra.Ecs.Interaction
 					}
 				}
 			}
-
+			_onBegin.Invoke();
 			CanInteract = false;
 		}
 
@@ -44,6 +49,7 @@ namespace Depra.Ecs.Interaction
 
 		public void Finish(PackedEntityWithWorld sourceEntity)
 		{
+			_onFinish.Invoke();
 			return;
 		}
 	}

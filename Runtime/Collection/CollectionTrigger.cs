@@ -10,7 +10,7 @@ namespace Depra.Ecs.Interaction
 {
 	[DisallowMultipleComponent]
 	[AddComponentMenu(MENU_PATH + nameof(CollectionTrigger))]
-	public sealed class CollectionTrigger : MonoBehaviour
+	internal sealed class CollectionTrigger : MonoBehaviour
 	{
 		[SerializeField] private AuthoringEntity _authoringEntity;
 

@@ -1,5 +1,6 @@
 ﻿// SPDX-License-Identifier: Apache-2.0
-// © 2024 Evgeniy Kraevskiy <e.craevsky@depra.org>
+// © 2024 Depra <e.craevsky@depra.org>
+// © 2025 Depra <n.melnikov@depra.org>
 
 using Depra.Ecs.Components;
 using Depra.Ecs.QoL;
@@ -7,7 +8,7 @@ using UnityEngine;
 
 namespace Depra.Ecs.Interaction
 {
-	public sealed class InteractionSystem : IInitializationSystem, IExecutionSystem
+	public sealed class InteractionAimSystem : IInitializationSystem, IExecutionSystem
 	{
 		private World _world;
 		private IEntityQuery _entities;
@@ -36,24 +37,25 @@ namespace Depra.Ecs.Interaction
 			foreach (var entity in _entities)
 			{
 				// TODO: Использовать aim модуль
+				var layerMask = _interaction.Mask[entity].Value;
+				var maxDistance = _interaction.Distance[entity].Value;
 				var ray = _camera[entity].Value.ScreenPointToRay(Input.mousePosition);
-
-				if (!Physics.Raycast(ray, out var hit, _interaction.Distance[entity].Value,
-					    _interaction.Mask[entity].Value) ||
+				if (!Physics.Raycast(ray, out var hit, maxDistance, layerMask) ||
 				    !hit.collider.TryGetComponent<IInteractable>(out var interactable))
 				{
 					continue;
 				}
 
-				if (Input.GetButtonDown(_interaction.Button[entity].Value))
+				var button = _interaction.Button[entity].Value;
+				if (Input.GetButtonDown(button))
 				{
 					interactable.Begin(_world.PackEntityWithWorld(entity));
 				}
-				else if (Input.GetButton(_interaction.Button[entity].Value))
+				else if (Input.GetButton(button))
 				{
 					interactable.Execute(_world.PackEntityWithWorld(entity));
 				}
-				else if (Input.GetButtonUp(_interaction.Button[entity].Value))
+				else if (Input.GetButtonUp(button))
 				{
 					interactable.Finish(_world.PackEntityWithWorld(entity));
 				}

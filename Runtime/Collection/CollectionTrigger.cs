@@ -16,9 +16,12 @@ namespace Depra.Ecs.Interaction
 
 		private void OnTriggerEnter(Collider other)
 		{
-			if (_authoringEntity.Unpack(out var world, out var entity) &&
-			    world.Pool<CollectorTag>().TryGet(entity, out _) &&
-			    other.TryGetComponent<IInteractable>(out var interactable))
+			if (!other.TryGetComponent<IInteractable>(out var interactable))
+			{
+				return;
+			}
+
+			if (_authoringEntity.Unpack(out var world, out var entity))
 			{
 				world.Pool<PickUpRequest>().GetOrAllocate(entity).Value = interactable;
 			}

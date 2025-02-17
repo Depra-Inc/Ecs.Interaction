@@ -49,15 +49,15 @@ namespace Depra.Ecs.Interaction
 				var button = _interaction.Button[entity].Value;
 				if (Input.GetButtonDown(button))
 				{
-					interactable.Begin(_world.PackEntityWithWorld(entity));
+					interactable.Touch(_world.PackEntityWithWorld(entity));
 				}
 				else if (Input.GetButton(button))
 				{
-					interactable.Execute(_world.PackEntityWithWorld(entity));
+					interactable.Process(_world.PackEntityWithWorld(entity));
 				}
 				else if (Input.GetButtonUp(button))
 				{
-					interactable.Finish(_world.PackEntityWithWorld(entity));
+					interactable.Complete(_world.PackEntityWithWorld(entity));
 				}
 			}
 		}

@@ -15,7 +15,6 @@ namespace Depra.Ecs.Interaction
 		{
 			_world = worlds.Default;
 			_entities = new EntityQueryBuilder()
-				.With<CollectorTag>()
 				.With<PickUpRequest>()
 				.Build().Initialize(_world);
 
@@ -30,8 +29,8 @@ namespace Depra.Ecs.Interaction
 				var interactable = _collectablePick.UpRequest[entity].Value;
 				if (interactable.CanInteract(with: packedEntity))
 				{
-					interactable.Begin(packedEntity);
-					interactable.Finish(packedEntity);
+					interactable.Touch(packedEntity);
+					interactable.Complete(packedEntity);
 				}
 			}
 		}

@@ -18,14 +18,14 @@ namespace Depra.Ecs.Interaction
 
 		private int _useCount;
 
-		public event Action InteractionStarted;
-		public event Action InteractionFinished;
+		public event Action Touched;
+		public event Action Completed;
 
 		private bool CanInteract => _useLimit == -1 || _useCount < _useLimit;
 
 		bool IInteractable.CanInteract(PackedEntityWithWorld with) => CanInteract;
 
-		void IInteractable.Begin(PackedEntityWithWorld with)
+		void IInteractable.Touch(PackedEntityWithWorld with)
 		{
 			if (!with.Unpack(out var world, out var entity))
 			{
@@ -34,13 +34,13 @@ namespace Depra.Ecs.Interaction
 
 			_useCount++;
 			AddComponents(world, entity);
-			InteractionStarted?.Invoke();
+			Touched?.Invoke();
 		}
 
 		//TODO: Сделать таймер
-		void IInteractable.Execute(PackedEntityWithWorld with) { }
+		void IInteractable.Process(PackedEntityWithWorld with) { }
 
-		void IInteractable.Finish(PackedEntityWithWorld with) => InteractionFinished?.Invoke();
+		void IInteractable.Complete(PackedEntityWithWorld with) => Completed?.Invoke();
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		private void AddComponents(World world, Entity entity)

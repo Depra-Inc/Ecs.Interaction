@@ -10,8 +10,8 @@ namespace Depra.Ecs.Interaction
 	{
 		bool CanInteract(PackedEntityWithWorld with);
 
-		void Begin(PackedEntityWithWorld with);
-		void Execute(PackedEntityWithWorld with);
-		void Finish(PackedEntityWithWorld with);
+		void Touch(PackedEntityWithWorld with);
+		void Process(PackedEntityWithWorld with);
+		void Complete(PackedEntityWithWorld with);
 	}
 }

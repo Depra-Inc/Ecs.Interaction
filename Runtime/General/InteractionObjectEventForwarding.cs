@@ -1,4 +1,8 @@
-﻿using UnityEngine;
+﻿// SPDX-License-Identifier: Apache-2.0
+// © 2025 Depra <n.melnikov@depra.org>
+
+using JetBrains.Annotations;
+using UnityEngine;
 using UnityEngine.Events;
 
 namespace Depra.Ecs.Interaction
@@ -12,15 +16,18 @@ namespace Depra.Ecs.Interaction
 		private void OnEnable()
 		{
 			var obj = GetComponent<InteractionObject>();
-			obj.InteractionStarted += _onBegin.Invoke;
-			obj.InteractionFinished += _onFinish.Invoke;
+			obj.Touched += _onBegin.Invoke;
+			obj.Completed += _onFinish.Invoke;
 		}
 
 		private void OnDisable()
 		{
 			var obj = GetComponent<InteractionObject>();
-			obj.InteractionStarted -= _onBegin.Invoke;
-			obj.InteractionFinished -= _onFinish.Invoke;
+			obj.Touched -= _onBegin.Invoke;
+			obj.Completed -= _onFinish.Invoke;
 		}
+
+		[PublicAPI]
+		public void DestroyInRuntime() => Destroy(gameObject);
 	}
 }

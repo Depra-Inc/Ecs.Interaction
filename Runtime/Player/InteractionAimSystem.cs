@@ -5,6 +5,7 @@
 using Depra.Ecs.Components;
 using Depra.Ecs.QoL;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace Depra.Ecs.Interaction
 {
@@ -24,7 +25,7 @@ namespace Depra.Ecs.Interaction
 			_entities = new EntityQueryBuilder()
 				.With<CameraRef>()
 				.With<InteractionLayerMask>()
-				.With<InteractInputButton>()
+				.With<InteractInputActionRef>()
 				.With<InteractionDistance>()
 				.Build().Initialize(_world);
 
@@ -39,23 +40,23 @@ namespace Depra.Ecs.Interaction
 				// TODO: Использовать aim модуль
 				var layerMask = _interaction.Mask[entity].Value;
 				var maxDistance = _interaction.Distance[entity].Value;
-				var ray = _camera[entity].Value.ScreenPointToRay(Input.mousePosition);
+				var ray = _camera[entity].Value.ScreenPointToRay(Mouse.current.position.value);
 				if (!Physics.Raycast(ray, out var hit, maxDistance, layerMask) ||
 				    !hit.collider.TryGetComponent<IInteractable>(out var interactable))
 				{
 					continue;
 				}
 
-				var button = _interaction.Button[entity].Value;
-				if (Input.GetButtonDown(button))
+				var inputAction = _interaction.Button[entity].Value.action;
+				if (inputAction.WasPressedThisFrame())
 				{
 					interactable.Touch(_world.PackEntityWithWorld(entity));
 				}
-				else if (Input.GetButton(button))
+				else if (inputAction.WasPressedThisFrame())
 				{
 					interactable.Process(_world.PackEntityWithWorld(entity));
 				}
-				else if (Input.GetButtonUp(button))
+				else if (inputAction.WasReleasedThisFrame())
 				{
 					interactable.Complete(_world.PackEntityWithWorld(entity));
 				}

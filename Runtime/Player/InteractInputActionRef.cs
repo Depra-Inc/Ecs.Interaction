@@ -2,11 +2,13 @@
 // © 2024 Depra <e.craevsky@depra.org>
 // © 2025 Depra <n.melnikov@depra.org>
 
+using UnityEngine.InputSystem;
+
 namespace Depra.Ecs.Interaction
 {
 	[System.Serializable]
-	public struct InteractInputButton
+	public struct InteractInputActionRef
 	{
-		public string Value;
+		public InputActionReference Value;
 	}
 }

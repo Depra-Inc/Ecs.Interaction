@@ -35,6 +35,11 @@ namespace Depra.Ecs.Interaction
 				var prefabs = _lootDrop.Prefabs[entity].Value;
 				foreach (var prefab in prefabs)
 				{
+					if (Random.value > prefab.Chance)
+					{
+						continue;
+					}
+
 					var worldPosition = position + prefab.Offset;
 					var worldRotation = prefab.Value.transform.rotation;
 					Object.Instantiate(prefab.Value, worldPosition, worldRotation);

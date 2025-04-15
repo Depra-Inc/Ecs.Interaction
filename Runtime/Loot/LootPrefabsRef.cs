@@ -15,6 +15,7 @@ namespace Depra.Ecs.Interaction
 		{
 			public Vector3 Offset;
 			public GameObject Value;
+			[Range(0, 1)] public float Chance;
 		}
 	}
 }

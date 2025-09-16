@@ -1,13 +1,13 @@
 {
 	"name": "com.depra.ecs.interaction",
-	"version": "0.0.6",
+	"version": "0.0.7-pre.1",
 	"displayName": "Depra.Ecs.Interaction",
 	"description": "",
 	"unity": "2022.3",
 	"license": "Apache-2.0",
 	"dependencies": {
-		"com.depra.ecs.hybrid": "0.3.0",
-		"com.depra.ecs.unity" : "0.4.6"
+		"com.depra.ecs.hybrid": "0.3.4",
+		"com.depra.ecs.unity" : "0.4.10"
 	},
 	"keywords": [
 		"ecs",

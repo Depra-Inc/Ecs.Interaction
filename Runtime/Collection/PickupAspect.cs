@@ -3,14 +3,14 @@
 
 namespace Depra.Ecs.Interaction
 {
-	public sealed class PickUpCollectionAspect : IComponentAspect
+	public sealed class PickupAspect : IComponentAspect
 	{
-		public ComponentPool<PickUpRequest> UpRequest { get; private set; }
+		public ComponentPool<PickupRequest> Request { get; private set; }
 
 		void IComponentAspect.Initialize(AspectGroup aspects, ComponentPoolGroup pools)
 		{
 			aspects.Add(this);
-			pools.Add(UpRequest = new ComponentPool<PickUpRequest>());
+			pools.Add(Request = new ComponentPool<PickupRequest>());
 		}
 	}
 }

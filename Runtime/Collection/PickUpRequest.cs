@@ -3,8 +3,8 @@
 
 namespace Depra.Ecs.Interaction
 {
-	public struct PickUpRequest
+	public struct PickupRequest
 	{
-		public IInteractable Value;
+		public PickupItem Value;
 	}
 }

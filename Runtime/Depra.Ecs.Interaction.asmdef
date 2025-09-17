@@ -15,6 +15,7 @@
         "Depra.Ecs.dll",
         "Depra.Ecs.QoL.dll",
         "Depra.Ecs.Modules.dll",
+        "Depra.Ecs.Companion.dll",
         "Depra.Ecs.Health.dll"
     ],
     "autoReferenced": true,

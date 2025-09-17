@@ -5,20 +5,20 @@ using Depra.Ecs.QoL;
 
 namespace Depra.Ecs.Interaction
 {
-	public sealed class PickUpCollectionSystem : IInitializationSystem, IExecutionSystem
+	public sealed class PickupExecutionSystem : IInitializationSystem, IExecutionSystem
 	{
 		private World _world;
 		private IEntityQuery _entities;
-		private PickUpCollectionAspect _collectablePick;
+		private ComponentPool<PickupRequest> _request;
 
 		void IInitializationSystem.Initialize(IWorldGroup worlds)
 		{
 			_world = worlds.Default;
 			_entities = new EntityQueryBuilder()
-				.With<PickUpRequest>()
+				.With<PickupRequest>()
 				.Build().Initialize(_world);
 
-			_collectablePick = _world.Aspect<PickUpCollectionAspect>();
+			_request = _world.Pool<PickupRequest>();
 		}
 
 		void IExecutionSystem.Execute()
@@ -26,12 +26,13 @@ namespace Depra.Ecs.Interaction
 			foreach (var entity in _entities)
 			{
 				var packedEntity = _world.PackEntityWithWorld(entity);
-				var interactable = _collectablePick.UpRequest[entity].Value;
-				if (interactable.CanInteract(with: packedEntity))
+				var item = _request[entity].Value;
+				if (item.Available(@for: packedEntity))
 				{
-					interactable.Touch(packedEntity);
-					interactable.Complete(packedEntity);
+					item.Collect(@for: packedEntity);
 				}
+
+				_request.Delete(entity);
 			}
 		}
 	}

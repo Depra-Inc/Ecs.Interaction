@@ -5,15 +5,15 @@ using Depra.Ecs.Modules;
 
 namespace Depra.Ecs.Interaction
 {
-	public sealed class PickUpCollectionModule : IModule
+	public sealed class PickupModule : IModule
 	{
 		internal const string MENU_PATH = nameof(Ecs) + "/" + nameof(Interaction) + "/";
 
 		IComponentAspect[] IModule.Aspects => new IComponentAspect[]
 		{
-			new PickUpCollectionAspect()
+			new PickupAspect()
 		};
 
-		void IModule.Initialize(ISystemGroup systems) => systems.Add(new PickUpCollectionSystem());
+		void IModule.Initialize(ISystemGroup systems) => systems.Add(new PickupExecutionSystem());
 	}
 }

@@ -4,9 +4,7 @@
     "references": [
         "GUID:e26e79c2120fe6b48b93f825f9528a77",
         "GUID:59eeb61925854c1d977ff887c2867aaf",
-        "GUID:253cfc22f702e854eb8d6e4dce35f072",
-        "GUID:75469ad4d38634e559750d17036d5f7c",
-        "GUID:a31f53cca60a5b84fbbffed0730eb843"
+        "GUID:75469ad4d38634e559750d17036d5f7c"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
@@ -16,9 +14,7 @@
         "Depra.Ecs.dll",
         "Depra.Ecs.QoL.dll",
         "Depra.Ecs.Modules.dll",
-        "Depra.Ecs.Companion.dll",
-        "Depra.Ecs.Health.dll",
-        "Depra.Pooling.dll"
+        "Depra.Ecs.Companion.dll"
     ],
     "autoReferenced": true,
     "defineConstraints": [],

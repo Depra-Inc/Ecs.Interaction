@@ -1,0 +1,28 @@
+{
+    "name": "Depra.Ecs.Interaction.Trigger",
+    "rootNamespace": "Depra.Ecs.Interaction.Trigger",
+    "references": [
+        "GUID:5e1be87b3e6dea949b115569cfb005d2",
+        "GUID:e26e79c2120fe6b48b93f825f9528a77",
+        "GUID:59eeb61925854c1d977ff887c2867aaf",
+        "GUID:75469ad4d38634e559750d17036d5f7c"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "Depra.Ecs.dll",
+        "Depra.Ecs.QoL.dll",
+        "Depra.Ecs.Modules.dll",
+        "Depra.Ecs.Companion.dll",
+        "Depra.Ecs.Time.dll",
+        "Depra.Ecs.Timeout.dll",
+        "Depra.Logging.dll",
+        "Depra.IoC.Injection.dll"
+    ],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

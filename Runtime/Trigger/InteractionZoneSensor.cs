@@ -12,11 +12,15 @@ namespace Depra.Ecs.Interaction.Trigger
 {
 	[DisallowMultipleComponent]
 	[AddComponentMenu(MENU_PATH + nameof(InteractionZoneSensor))]
-	internal sealed class InteractionZoneSensor : MonoBehaviour
+	internal sealed class InteractionZoneSensor : MonoBehaviour, IAuthoring
 	{
-		[SerializeField] private AuthoringEntity _authoringEntity;
-
 		private readonly Dictionary<InteractionZone, int> _overlaps = new();
+
+		private PackedEntityWithWorld _entity = PackedEntityWithWorld.NULL;
+		private TriggerInteractionAspect _trigger;
+		private ComponentPool<TriggerInteractionCandidates> _candidates;
+
+		IBaker IAuthoring.CreateBaker() => new Baker(this);
 
 		private void OnTriggerEnter(Collider other)
 		{
@@ -33,10 +37,10 @@ namespace Depra.Ecs.Interaction.Trigger
 			}
 
 			zone.Track(this);
-			if (_authoringEntity.Unpack(out var world, out var entity))
+			if (_entity.Unpack(out _, out var entity))
 			{
-				world.Pool<TriggerInteractionCandidates>().GetOrAllocate(entity).Value.Add(zone.Target);
-				world.Aspect<TriggerInteractionAspect>().Logger.Info("Enter zone {0}", zone.Target);
+				_candidates.GetOrAllocate(entity).Value.Add(zone.Target);
+				_trigger.Logger.Info("Enter zone {0}", zone.Target);
 			}
 		}
 
@@ -66,8 +70,7 @@ namespace Depra.Ecs.Interaction.Trigger
 			}
 
 			_overlaps.Clear();
-			if (_authoringEntity.Unpack(out var world, out var entity) &&
-			    world.Pool<TriggerInteractionCandidates>().TryGet(entity, out var candidates))
+			if (_entity.Unpack(out _, out var entity) && _candidates.TryGet(entity, out var candidates))
 			{
 				candidates.Value.Clear();
 			}
@@ -76,11 +79,29 @@ namespace Depra.Ecs.Interaction.Trigger
 		internal void Release(InteractionZone zone)
 		{
 			_overlaps.Remove(zone);
-			if (_authoringEntity.Unpack(out var world, out var entity) &&
-			    world.Pool<TriggerInteractionCandidates>().TryGet(entity, out var candidates))
+			if (_entity.Unpack(out _, out var entity) && _candidates.TryGet(entity, out var candidates))
 			{
 				candidates.Value.Remove(zone.Target);
-				world.Aspect<TriggerInteractionAspect>().Logger.Info("Exit zone {0}", zone.Target);
+				_trigger.Logger.Info("Exit zone {0}", zone.Target);
+			}
+		}
+
+		private readonly struct Baker : IBaker
+		{
+			private readonly InteractionZoneSensor _sensor;
+
+			public Baker(InteractionZoneSensor sensor) => _sensor = sensor;
+
+			void IBaker.Bake(IAuthoring authoring, World world)
+			{
+				if (!((IAuthoringEntity)authoring).Unpack(out var entity))
+				{
+					return;
+				}
+
+				_sensor._entity = world.PackEntityWithWorld(entity);
+				_sensor._trigger = world.Aspect<TriggerInteractionAspect>();
+				_sensor._candidates = world.Pool<TriggerInteractionCandidates>();
 			}
 		}
 	}

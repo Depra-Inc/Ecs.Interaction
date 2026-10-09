@@ -1,16 +1,24 @@
 // SPDX-License-Identifier: Apache-2.0
 // © 2026 Depra <e.craevsky@depra.org>
 
-using System;
 using System.Collections.Generic;
 
 namespace Depra.Ecs.Interaction.Trigger
 {
-	[Serializable]
-	public struct TriggerInteractionCandidates
+	public struct TriggerInteractionCandidates : IAutoReset<TriggerInteractionCandidates>
 	{
-		private List<ITriggerInteractable> _value;
+		public List<ITriggerInteractable> Value;
 
-		public List<ITriggerInteractable> Value => _value ??= new List<ITriggerInteractable>();
+		void IAutoReset<TriggerInteractionCandidates>.AutoReset(ref TriggerInteractionCandidates component)
+		{
+			if (component.Value == null)
+			{
+				component.Value = new List<ITriggerInteractable>();
+			}
+			else
+			{
+				component.Value.Clear();
+			}
+		}
 	}
 }

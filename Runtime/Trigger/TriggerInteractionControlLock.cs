@@ -6,10 +6,20 @@ using UnityEngine.InputSystem;
 
 namespace Depra.Ecs.Interaction.Trigger
 {
-	public struct TriggerInteractionControlLock
+	public struct TriggerInteractionControlLock : IAutoReset<TriggerInteractionControlLock>
 	{
-		private List<InputAction> _value;
+		public List<InputAction> Value;
 
-		public List<InputAction> Value => _value ??= new List<InputAction>();
+		void IAutoReset<TriggerInteractionControlLock>.AutoReset(ref TriggerInteractionControlLock component)
+		{
+			if (component.Value == null)
+			{
+				component.Value = new List<InputAction>();
+			}
+			else
+			{
+				component.Value.Clear();
+			}
+		}
 	}
 }

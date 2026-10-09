@@ -30,9 +30,5 @@ namespace Depra.Ecs.Interaction.Trigger
 		internal void Track(InteractionZoneSensor sensor) => _sensors.Add(sensor);
 
 		internal void Untrack(InteractionZoneSensor sensor) => _sensors.Remove(sensor);
-
-#if UNITY_EDITOR
-		private void OnValidate() => GetComponent<Collider>().isTrigger = true;
-#endif
 	}
 }

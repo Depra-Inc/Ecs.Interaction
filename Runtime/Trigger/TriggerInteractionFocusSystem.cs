@@ -4,6 +4,7 @@
 using System.Collections.Generic;
 using Depra.Ecs.Components;
 using Depra.Ecs.QoL;
+using Depra.Ecs.Transformation;
 using UnityEngine;
 
 namespace Depra.Ecs.Interaction.Trigger

@@ -131,7 +131,7 @@ namespace Depra.Ecs.Interaction.Trigger
 			_trigger.Hold.Delete(entity);
 			_trigger.Aligning.TryDelete(entity);
 			_elapsed.TryDelete(entity);
-			_timeout.StartRequests.TryDelete(entity);
+			_timeout.Stop(entity);
 		}
 	}
 }
